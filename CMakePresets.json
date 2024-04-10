@@ -1,0 +1,85 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "devdbg",
+      "displayName": "Debug Config, Clang, Ninja, macOS specific",
+      "description": "Debug build using Ninja generator and the Clang compiler in macOS",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_SHARED_LIBS": "ON"
+      },
+      "environment": {
+        "CXX": "clang++",
+        "LDFLAGS": "-L$env{HOMEBREW_PREFIX}/opt/llvm/lib/c++ -Wl,-rpath,$env{HOMEBREW_PREFIX}/opt/llvm/lib/c++",
+        "CPPFLAGS": "-I$env{HOMEBREW_PREFIX}/opt/llvm/include"
+      }
+    },
+    {
+      "name": "devrel",
+      "displayName": "Release Config, Clang, Ninja, macOS specific",
+      "description": "Release build using Ninja generator and the Clang compiler in macOS",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_SHARED_LIBS": "ON"
+      },
+      "environment": {
+        "CXX": "clang++",
+        "LDFLAGS": "-L$env{HOMEBREW_PREFIX}/opt/llvm/lib/c++ -Wl,-rpath,$env{HOMEBREW_PREFIX}/opt/llvm/lib/c++",
+        "CPPFLAGS": "-I$env{HOMEBREW_PREFIX}/opt/llvm/include"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "rel",
+      "configurePreset": "devrel",
+      "targets": []
+    },
+    {
+      "name": "dbg",
+      "configurePreset": "devdbg",
+      "targets": [],
+      "verbose": true
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "devdbg-workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "devdbg"
+        },
+        {
+          "type": "build",
+          "name": "dbg"
+        }
+      ]
+    },
+    {
+      "name": "devrel-workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "devrel"
+        },
+        {
+          "type": "build",
+          "name": "rel"
+        }
+      ]
+    }
+  ]
+}

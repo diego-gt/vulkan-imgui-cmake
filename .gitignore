@@ -1,3 +1,9 @@
+### dev ignores
+build*/
+compile_commands.json
+.cache/
+.vscode/
+
 # Prerequisites
 *.d
 
