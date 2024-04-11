@@ -29,9 +29,13 @@ Install GLFW (3.4):
 
 On Windows:
 
-Manually download from [official GLFW Download](https://www.glfw.org/download)
+Recommended: use [`vcpkg`](https://github.com/microsoft/vcpkg):
 
-Or see if installing from `winget` is possible.
+```shell
+vcpkg install glfw3:x64-windows
+```
+
+Manually download from [official GLFW Download](https://www.glfw.org/download)
 
 On macOS:
 
