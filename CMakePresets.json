@@ -7,7 +7,39 @@
   },
   "configurePresets": [
     {
-      "name": "devdbg",
+      "name": "windows-debug",
+      "displayName": "Debug Config, Clang, Ninja, windows specific",
+      "description": "Debug build using Ninja generator and the Clang compiler in windows",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_SHARED_LIBS": "ON"
+      },
+      "environment": {
+        "CXX": "clang++"
+      },
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "windows-release",
+      "displayName": "Debug Config, Clang, Ninja, windows specific",
+      "description": "Debug build using Ninja generator and the Clang compiler in windows",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_SHARED_LIBS": "ON"
+      },
+      "environment": {
+        "CXX": "clang++"
+      },
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "macos-debug",
       "displayName": "Debug Config, Clang, Ninja, macOS specific",
       "description": "Debug build using Ninja generator and the Clang compiler in macOS",
       "generator": "Ninja",
@@ -24,7 +56,7 @@
       }
     },
     {
-      "name": "devrel",
+      "name": "macos-release",
       "displayName": "Release Config, Clang, Ninja, macOS specific",
       "description": "Release build using Ninja generator and the Clang compiler in macOS",
       "generator": "Ninja",
@@ -43,41 +75,78 @@
   ],
   "buildPresets": [
     {
-      "name": "rel",
-      "configurePreset": "devrel",
+      "name": "macos-release",
+      "configurePreset": "macos-release",
       "targets": []
     },
     {
-      "name": "dbg",
-      "configurePreset": "devdbg",
+      "name": "macos-debug",
+      "configurePreset": "macos-debug",
+      "targets": [],
+      "verbose": true
+    },
+    {
+      "name": "windows-release",
+      "configurePreset": "windows-release",
+      "targets": []
+    },
+    {
+      "name": "windows-debug",
+      "configurePreset": "windows-debug",
       "targets": [],
       "verbose": true
     }
   ],
   "workflowPresets": [
     {
-      "name": "devdbg-workflow",
+      "name": "windows-debug-workflow",
       "steps": [
         {
           "type": "configure",
-          "name": "devdbg"
+          "name": "windows-debug"
         },
         {
           "type": "build",
-          "name": "dbg"
+          "name": "windows-debug"
         }
       ]
     },
     {
-      "name": "devrel-workflow",
+      "name": "windows-release-workflow",
       "steps": [
         {
           "type": "configure",
-          "name": "devrel"
+          "name": "windows-release"
         },
         {
           "type": "build",
-          "name": "rel"
+          "name": "windows-release"
+        }
+      ]
+    },
+    {
+      "name": "macos-debug-workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-debug"
+        },
+        {
+          "type": "build",
+          "name": "macos-debug"
+        }
+      ]
+    },
+    {
+      "name": "macos-release-workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-release"
+        },
+        {
+          "type": "build",
+          "name": "macos-release"
         }
       ]
     }
