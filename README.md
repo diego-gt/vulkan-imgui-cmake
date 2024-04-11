@@ -60,13 +60,13 @@ CMake Presets are provided to make this easier, however, at the time of writing 
 Configure the project. If you modified or added your own presets, change the preset name to the one you want to use.
 
 ```shell
-cmake --preset devdbg
+cmake --preset windows-debug
 ```
 
 Build the project. Same consideration related to the preset name applies.
 
 ```shell
-cmake --build --preset dbg
+cmake --build --preset windows-debug
 ```
 
 If everything was built correctly, you should see your binary executable in `$project_dir/build/src/` if you used the same presets.
